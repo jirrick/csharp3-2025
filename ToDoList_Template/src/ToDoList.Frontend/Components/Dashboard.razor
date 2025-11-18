@@ -1,4 +1,5 @@
 @using ToDoList.Frontend.Models
+@using System.Linq
 
 <div class="container mt-4">
     <h2>Dashboard</h2>
@@ -6,14 +7,18 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Název</th>
+                <th>
+                    <button @onclick="OrderById" class="btn btn-sm btn-outline-primary">Order by ID</button>
+                </th>
+                <th>
+                    <button @onclick="OrderByName" class="btn btn-sm btn-outline-primary">Order by Name</button>
+                </th>
                 <th>Popis</th>
                 <th>Dokončeno</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in testData)
+            @foreach (var item in sortedData)
             {
                 <tr>
                     <td>@item.Id</td>
@@ -35,5 +40,22 @@
         new ToDoItemView(4, "Cvičit", "Běhání v parku", false),
         new ToDoItemView(5, "Přečíst knihu", "Kapitola 5", true)
     };
+
+    private List<ToDoItemView> sortedData = new();
+
+    protected override void OnInitialized()
+    {
+        sortedData = testData.ToList();
+    }
+
+    private void OrderById()
+    {
+        sortedData = testData.OrderBy(x => x.Id).ToList();
+    }
+
+    private void OrderByName()
+    {
+        sortedData = testData.OrderBy(x => x.Name).ToList();
+    }
 }
 
