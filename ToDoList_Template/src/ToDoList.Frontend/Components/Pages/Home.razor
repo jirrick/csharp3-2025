@@ -1,4 +1,5 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
@@ -10,9 +11,23 @@ Welcome to your new app.
 
 <b>@GetValue()</b>
 
+<br />
+
+<button @onclick="IncrementCounter" class="btn btn-primary">JmenoTlacitka</button>
+<p>Počet kliknutí: @counter</p>
+
+<Dashboard />
+
 @code {
+    private int counter = 0;
+
     private string GetValue()
     {
         return Guid.NewGuid().ToString();
+    }
+
+    private void IncrementCounter()
+    {
+        counter++;
     }
 }
